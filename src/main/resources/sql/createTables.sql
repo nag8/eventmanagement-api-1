@@ -1,53 +1,55 @@
+use events; 
+
 create table organizer
 (
-  id int  not null auto_increment,name varchar(20)  not null, 
-  created timestamp default current_timestamp,  
-  primary key (id)
+  ID int  not null auto_increment,NAME varchar(20)  not null, 
+  CREATED timestamp default current_timestamp,  
+  primary key (ID)
 );
 
 
 create table venue
 (
-  id         int not null auto_increment,
-  created    timestamp default current_timestamp,
-  name       varchar(256),
-  street_address    varchar(256),
-  street_address2   varchar(256),
-  city              varchar(256),
-  state             varchar(256),
-  country           varchar(256),
-  postal_code       varchar(256),
-  primary key (id)
+  ID         int not null auto_increment,
+  CREATED    timestamp default current_timestamp,
+  NAME       varchar(256),
+  STREET_ADDRESS    varchar(256),
+  STREET_ADDRESS2   varchar(256),
+  CITY              varchar(256),
+  STATE             varchar(256),
+  COUNTRY           varchar(256),
+  POSTAL_CODE       varchar(256),
+  primary key (ID)
 );
 
 
 create table event
 (
-  id              int	not null auto_increment,
-  created         timestamp    default current_timestamp,
-  name            varchar(256),
-  description     varchar(2048),
-  start_time      timestamp default current_timestamp,
-  end_time        timestamp default current_timestamp,
-  zone_id         blob,
-  started       int,
-  organizer_id    int                          not null,
-  venue_id        int,
-  primary key (id),
-   foreign key (organizer_id) references organizer(id) on delete cascade,
-  foreign key (venue_id) references venue(id)
+  ID              int	not null auto_increment,
+  CREATED         timestamp    default current_timestamp,
+  NAME            varchar(256),
+  DESCRIPTION     varchar(2048),
+  START_TIME      timestamp default current_timestamp,
+  END_TIME        timestamp default current_timestamp,
+  ZONE_ID         blob,
+  STARTED       int,
+  ORGANIZER_ID    int                          not null,
+  VENUE_ID        int,
+  primary key (ID),
+   foreign key (ORGANIZER_ID) references organizer(ID) on delete cascade,
+  foreign key (VENUE_ID) references venue(ID)
 );
 
 
-create table participant
-(
-  id  	int        not null auto_increment,
-  created    timestamp default current_timestamp,
-  name      varchar(256) not null,
-  email      varchar(256) not null,
-  checked_in   int,
-  event_id    int        not null,
-  primary key (id),
-  foreign key (event_id) references event(id),
-  unique (event_id, email)
+CREATE TABLE participant (
+    ID INT NOT NULL AUTO_INCREMENT,
+    CREATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    NAME VARCHAR(256) NOT NULL,
+    EMAIL VARCHAR(256) NOT NULL,
+    CHECKED_IN INT,
+    EVENT_ID INT NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (EVENT_ID)
+        REFERENCES event (ID),
+    UNIQUE (EVENT_ID , EMAIL)
 );
