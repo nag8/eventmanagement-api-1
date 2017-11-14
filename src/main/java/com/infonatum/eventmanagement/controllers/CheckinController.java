@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.infonatum.eventmanagement.controllers.exceptions.AlreadyCheckedInException;
+import com.infonatum.eventmanagement.controllers.exceptions.NotCheckedInException;
 import com.infonatum.eventmanagement.entities.Participant;
 import com.infonatum.eventmanagement.repos.ParticipantRepository;
 
@@ -31,6 +32,25 @@ public class CheckinController {
 		}
 		
 		participant.setCheckedIn(true);
+
+		participantRepository.save(participant);
+		
+		return ResponseEntity.ok(assembler.toResource(participant));
+		
+	}
+	
+	
+	@PostMapping("/checkout/{id}")
+	public ResponseEntity<PersistentEntityResource> checkOut(@PathVariable Long id, PersistentEntityResourceAssembler assembler){
+		Participant participant = participantRepository.findOne(id);
+		
+		if(participant != null) {
+			if(!participant.getCheckedIn()) {
+				throw new NotCheckedInException();
+			}
+		}
+
+		participant.setCheckedIn(false);
 
 		participantRepository.save(participant);
 		
