@@ -1,5 +1,6 @@
 package com.infonatum.eventmanagement.entities.projections;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 import org.springframework.data.rest.core.config.Projection;
@@ -11,4 +12,5 @@ public interface PartialEventProjection {
 	String getName();
 	ZonedDateTime getStartTime();
 	ZonedDateTime getEndTime();
+	Instant getCreated();
 }
